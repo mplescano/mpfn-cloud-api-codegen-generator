@@ -1,0 +1,62 @@
+openapi: 3.0.3
+info:
+  title: Title
+  version: "2.0.0"
+  description: test
+  contact:
+    name: test contact
+    url: 'http://www.contact.com'
+security:
+  - OAuth2: []
+paths:
+  '/admin/texts':
+    get:
+      summary: Get
+      description: description
+      operationId: getTest
+      parameters:
+        - name: name
+          in: query
+          description: query description
+          style: form
+          explode: true
+          schema:
+            $ref: '#/components/schemas/BaseAudit'
+      responses:
+        200:
+          description: Successfully updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseRecordVersion'
+servers:
+  - url: 'http://localhost:8082/v1'
+  - url: 'https://localhost:8082/v1'
+components:
+  schemas:
+    BaseAudit:
+      type: object
+      description: Base audit fields
+      properties:
+        created:
+          type: string
+          format: date-time
+          description: Indicates time of creation.
+        modified:
+          type: string
+          format: date-time
+          description: Indicates time of last modification.
+        createdBy:
+          type: string
+          description: Identification of creator.
+        modifiedBy:
+          type: string
+          description: Identification of modifier.
+    BaseRecordVersion:
+      type: object
+      description: BaseRecordVersion
+      properties:
+        recordVersion:
+          type: integer
+          description: 'Timestamp from last update, not to be updated directly'
+          format: int64
